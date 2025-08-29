@@ -4,7 +4,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000; // Permitir configurar el puerto a través de una variable de entorno
 
 // Habilitar CORS para permitir solicitudes de otros orígenes
 app.use(cors());
@@ -12,7 +12,8 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Conexión a MongoDB
-mongoose.connect('mongodb://localhost:27017/feedback', { useNewUrlParser: true, useUnifiedTopology: true })
+const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/feedback'; // Utilizar variable de entorno para la URI de MongoDB
+mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Conectado a MongoDB...'))
   .catch(err => {
     console.error('Error al conectar a MongoDB:', err);
