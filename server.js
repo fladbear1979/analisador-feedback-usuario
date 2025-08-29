@@ -14,7 +14,10 @@ app.use(bodyParser.json());
 // Conexión a MongoDB
 mongoose.connect('mongodb://localhost:27017/feedback', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Conectado a MongoDB...'))
-  .catch(err => console.log(err));
+  .catch(err => {
+    console.error('Error al conectar a MongoDB:', err);
+    process.exit(1); // Salida del proceso si ocurre un error en la conexión
+  });
 
 // Endpoint principal que devuelve un mensaje de bienvenida
 app.get('/', (req, res) => {
